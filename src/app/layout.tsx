@@ -1,13 +1,11 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { AuthProvider } from '@/contexts/AuthContext'
+import Providers from './providers'
 
 export const metadata: Metadata = {
   title: 'HommLink CRM - Temsilci Aday Yönetim Sistemi',
   description: 'Homm Bitkisel temsilci aday yönetimi için modern CRM sistemi',
   manifest: '/manifest.json',
-  themeColor: '#4CAF50',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -29,6 +27,15 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: '#4CAF50',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -37,9 +44,9 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className="font-sans">
-        <AuthProvider>
+        <Providers>
           {children}
-        </AuthProvider>
+        </Providers>
       </body>
     </html>
   )

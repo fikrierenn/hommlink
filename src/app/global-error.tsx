@@ -8,8 +8,8 @@ export default function GlobalError({
   reset: () => void
 }) {
   return (
-    <html>
-      <body>
+    <html lang="tr">
+      <body className="font-sans">
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="text-center">
             <h1 className="text-6xl font-bold text-gray-900 mb-4">Hata</h1>
