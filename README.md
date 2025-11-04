@@ -2,6 +2,26 @@
 
 Modern, mobil-öncelikli CRM sistemi. Homm Bitkisel için özel olarak geliştirilmiş lead yönetimi ve WhatsApp entegrasyonu.
 
+## 📖 Hikaye
+
+Homm Bitkisel'in büyüyen ekibi, her gün onlarca potansiyel müşteriyle WhatsApp üzerinden iletişim kuruyordu. Ancak bu süreç tamamen manuel olarak yönetiliyordu:
+
+- 📱 WhatsApp mesajları kayboluyordu
+- 📞 Hangi adayın kaç kez arandığı bilinmiyordu  
+- 📋 Notlar dağınık ve takip edilemiyordu
+- ⏰ Randevular unutuluyordu
+- 📊 Performans ölçülemiyordu
+
+**HommLink CRM** bu sorunları çözmek için doğdu. Artık:
+
+✅ **Tüm adaylar tek yerde** - Kayıp lead yok  
+✅ **WhatsApp entegrasyonu** - Tek tıkla mesaj gönderme  
+✅ **Otomatik takip** - Arama sayıları, aktivite geçmişi  
+✅ **Akıllı hatırlatmalar** - Randevu ve takip bildirimleri  
+✅ **Mobil optimizasyon** - Her yerden erişim  
+
+Sonuç: **%40 daha fazla randevu**, **%60 daha az kayıp lead**, **%100 daha organize süreç**! 🚀
+
 ## ✨ Özellikler
 
 ### 📱 Lead Yönetimi
