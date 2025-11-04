@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
+
+export const dynamic = 'force-dynamic'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Leaf, Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'

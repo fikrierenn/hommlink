@@ -1,6 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
 import { AppLayout } from '@/components/layout'
 import { LeadEditForm } from '@/components/leads/LeadEditForm'
 import { useLeadDetail } from '@/hooks'

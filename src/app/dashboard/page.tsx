@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+
+export const dynamic = 'force-dynamic'
 import { 
   Users, UserPlus, Phone, Calendar, MessageCircle
 } from 'lucide-react'

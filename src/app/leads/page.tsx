@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+
+export const dynamic = 'force-dynamic'
 import { AppLayout } from '@/components/layout'
 import { LeadList } from '@/components/leads/LeadList'
 import { LeadFilters } from '@/components/leads/LeadFilters'
