@@ -5,25 +5,28 @@ import { AppLayout } from '@/components/layout'
 import { LeadEditForm } from '@/components/leads/LeadEditForm'
 import { useLeadDetail } from '@/hooks'
 import { LoadingPage, Error } from '@/components/ui'
+import { use } from 'react'
+import type { Lead } from '@/types'
 
 interface LeadEditPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function LeadEditPage({ params }: LeadEditPageProps) {
+  const { id } = use(params)
   const router = useRouter()
-  const { lead, loading, error, updateLead } = useLeadDetail(params.id)
+  const { lead, loading, error, updateLead } = useLeadDetail(id)
 
   const handleBack = () => {
-    router.push(`/leads/${params.id}`)
+    router.push(`/leads/${id}`)
   }
 
-  const handleSave = async (updatedLead: any) => {
+  const handleSave = async (updatedLead: Partial<Lead>) => {
     try {
       await updateLead(updatedLead)
-      router.push(`/leads/${params.id}`)
+      router.push(`/leads/${id}`)
     } catch (error) {
       console.error('Error updating lead:', error)
       // Handle error (show toast, etc.)

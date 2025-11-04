@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Save, X } from 'lucide-react'
 import { Card, CardContent, Button, Input } from '@/components/ui'
 import { useStatuses } from '@/hooks'
+import { useAuth } from '@/contexts/AuthContext'
 import { normalizePhoneForStorage, validateTurkishPhone } from '@/lib/utils'
 import { LEAD_SOURCES, TURKISH_REGIONS } from '@/types'
 import type { LeadInsert } from '@/types'
@@ -15,6 +16,7 @@ interface LeadCreateFormProps {
 }
 
 export function LeadCreateForm({ onSave, onCancel, initialData }: LeadCreateFormProps) {
+  const { user } = useAuth()
   const { statuses } = useStatuses()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -64,7 +66,8 @@ export function LeadCreateForm({ onSave, onCancel, initialData }: LeadCreateForm
         city: formData.city || undefined,
         source: formData.source,
         notes: formData.notes || undefined,
-        status_id: formData.status_id || undefined
+        status_id: formData.status_id || undefined,
+        owner_uid: user?.id || ''
       }
 
       await onSave(leadData)

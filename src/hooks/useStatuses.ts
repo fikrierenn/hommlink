@@ -9,7 +9,7 @@ interface UseStatusesReturn {
   loading: boolean
   error: string | null
   fetchStatuses: () => Promise<void>
-  getStatusById: (id: number) => StatusDefinition | undefined
+  getStatusById: (id: string) => StatusDefinition | undefined
   getStatusByCode: (code: string) => StatusDefinition | undefined
 }
 
@@ -34,7 +34,7 @@ export function useStatuses(): UseStatusesReturn {
     }
   }, [])
 
-  const getStatusById = useCallback((id: number) => {
+  const getStatusById = useCallback((id: string) => {
     return statuses.find(status => status.id === id)
   }, [statuses])
 

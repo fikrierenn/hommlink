@@ -1,15 +1,5 @@
 // Form validation schemas and types
 
-export interface LeadFormData {
-  name: string
-  phone: string
-  region?: string
-  city?: string
-  source: string
-  notes?: string
-  status_id?: number
-}
-
 export interface LeadFormErrors {
   name?: string
   phone?: string

@@ -119,7 +119,7 @@ export class DatabaseService {
       console.log('👤 User authenticated:', user.user.id)
 
       // Remove undefined values and call_count (not in database yet)
-      const insertData = {
+      const insertData: any = {
         name: leadData.name,
         phone: leadData.phone,
         source: leadData.source,

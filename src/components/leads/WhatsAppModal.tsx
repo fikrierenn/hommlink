@@ -214,7 +214,7 @@ export function WhatsAppModal({ lead, onClose, onSent }: WhatsAppModalProps) {
                 className="flex-1 bg-whatsapp hover:bg-whatsapp/90 text-white flex items-center justify-center space-x-2"
               >
                 <ExternalLink className="h-4 w-4" />
-                <span>WhatsApp'ta Aç</span>
+                <span>WhatsApp&apos;ta Aç</span>
               </Button>
               
               <Button
@@ -231,7 +231,7 @@ export function WhatsAppModal({ lead, onClose, onSent }: WhatsAppModalProps) {
             {/* Emoji Warning */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
               <p className="text-xs text-yellow-800">
-                💡 <strong>İpucu:</strong> Emojiler doğru görünmüyorsa "Kopyala" butonunu kullanın ve WhatsApp'a manuel yapıştırın.
+                💡 <strong>İpucu:</strong> Emojiler doğru görünmüyorsa &quot;Kopyala&quot; butonunu kullanın ve WhatsApp&apos;a manuel yapıştırın.
               </p>
             </div>
             

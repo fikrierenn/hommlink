@@ -5,16 +5,18 @@ import { AppLayout } from '@/components/layout'
 import { LeadDetailView } from '@/components/leads/LeadDetailView'
 import { useLeadDetail } from '@/hooks'
 import { LoadingPage, Error } from '@/components/ui'
+import { use } from 'react'
 
 interface LeadDetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function LeadDetailPage({ params }: LeadDetailPageProps) {
+  const { id } = use(params)
   const router = useRouter()
-  const { lead, events, loading, error } = useLeadDetail(params.id)
+  const { lead, events, loading, error } = useLeadDetail(id)
 
   const handleBack = () => {
     router.push('/leads')
@@ -58,7 +60,7 @@ export default function LeadDetailPage({ params }: LeadDetailPageProps) {
       <LeadDetailView 
         lead={lead} 
         events={events}
-        onEdit={() => router.push(`/leads/${params.id}/edit`)}
+        onEdit={() => router.push(`/leads/${id}/edit`)}
       />
     </AppLayout>
   )

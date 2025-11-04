@@ -19,7 +19,7 @@ export function LeadFilters({
   initialFilters = {} 
 }: LeadFiltersProps) {
   const { statuses } = useStatuses()
-  const [selectedStatuses, setSelectedStatuses] = useState<number[]>(
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(
     initialFilters.status_ids || []
   )
   const [selectedRegions, setSelectedRegions] = useState<string[]>(
@@ -32,7 +32,7 @@ export function LeadFilters({
     initialFilters.date_range?.end || ''
   )
 
-  const toggleStatus = (statusId: number) => {
+  const toggleStatus = (statusId: string) => {
     setSelectedStatuses(prev => 
       prev.includes(statusId)
         ? prev.filter(id => id !== statusId)
