@@ -32,12 +32,26 @@ function LoginForm() {
     setError('')
     setIsLoading(true)
 
-    const result = await signIn(email, password)
-    
-    if (!result.success) {
-      setError(result.error || 'Giriş başarısız')
-    } else {
-      router.push(redirectTo)
+    console.log('📱 Login attempt from:', navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop')
+    console.log('📧 Email:', email)
+    console.log('🔗 Redirect to:', redirectTo)
+
+    try {
+      const result = await signIn(email, password)
+      
+      if (!result.success) {
+        console.error('❌ Login failed:', result.error)
+        setError(result.error || 'Giriş başarısız')
+      } else {
+        console.log('✅ Login successful, redirecting to:', redirectTo)
+        // Small delay to ensure session is set
+        setTimeout(() => {
+          router.push(redirectTo)
+        }, 100)
+      }
+    } catch (error) {
+      console.error('❌ Login exception:', error)
+      setError('Beklenmeyen bir hata oluştu')
     }
     
     setIsLoading(false)
@@ -126,6 +140,15 @@ function LoginForm() {
                   </button>
                 </div>
               </div>
+
+              {/* Test Login Button */}
+              <button
+                type="button"
+                onClick={handleTestLogin}
+                className="w-full mb-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+              >
+                Test Hesabı ile Giriş
+              </button>
 
               {/* Login Button */}
               <button

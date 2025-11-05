@@ -105,17 +105,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       setLoading(true)
       
+      console.log('🔐 Attempting sign in for:', email)
+      
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: email.trim().toLowerCase(),
         password,
       })
 
+      console.log('🔐 Sign in result:', { data: !!data.user, error: error?.message })
+
       if (error) {
+        console.error('❌ Sign in error:', error)
         return { success: false, error: getAuthErrorMessage(error.message) }
       }
 
-      return { success: true }
+      if (data.user) {
+        console.log('✅ Sign in successful for user:', data.user.id)
+        // Force session refresh
+        await supabase.auth.getSession()
+        return { success: true }
+      }
+
+      return { success: false, error: 'Giriş yapılamadı' }
     } catch (error) {
+      console.error('❌ Sign in exception:', error)
       return { success: false, error: 'Giriş yapılırken bir hata oluştu' }
     } finally {
       setLoading(false)

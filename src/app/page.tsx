@@ -11,14 +11,22 @@ export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log('🏠 Home page - loading:', loading, 'user:', !!user)
+    
     if (!loading) {
-      if (user) {
-        // Kullanıcı giriş yapmışsa dashboard'a yönlendir
-        router.push('/dashboard')
-      } else {
-        // Kullanıcı giriş yapmamışsa login'e yönlendir
-        router.push('/login')
-      }
+      // Small delay for mobile devices to ensure auth state is properly loaded
+      const isMobile = typeof window !== 'undefined' && /Mobile|Android|iPhone|iPad/.test(navigator.userAgent)
+      const delay = isMobile ? 500 : 100
+      
+      setTimeout(() => {
+        if (user) {
+          console.log('✅ User authenticated, redirecting to dashboard')
+          router.push('/dashboard')
+        } else {
+          console.log('❌ No user, redirecting to login')
+          router.push('/login')
+        }
+      }, delay)
     }
   }, [user, loading, router])
 

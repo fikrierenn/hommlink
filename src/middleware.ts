@@ -60,12 +60,18 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
+  // Check if this is a mobile device
+  const userAgent = req.headers.get('user-agent') || ''
+  const isMobile = /Mobile|Android|iPhone|iPad/.test(userAgent)
+
   // Debug logging in development
   if (process.env.NODE_ENV === 'development') {
     console.log('🔒 Middleware check:', {
       path: req.nextUrl.pathname,
       hasSession: !!session,
-      userEmail: session?.user?.email
+      userEmail: session?.user?.email,
+      isMobile,
+      userAgent: userAgent.substring(0, 50) + '...'
     })
   }
 
@@ -83,8 +89,19 @@ export async function middleware(req: NextRequest) {
   // If user is not authenticated and trying to access protected route
   if (!session && isProtectedRoute) {
     if (process.env.NODE_ENV === 'development') {
-      console.log('❌ No session, redirecting to login')
+      console.log('❌ No session, redirecting to login', { isMobile })
     }
+    
+    // For mobile devices, be more lenient with session checks
+    if (isMobile) {
+      // Check if there's an auth token in cookies
+      const authToken = req.cookies.get('hommlink-auth-token')
+      if (authToken) {
+        // Let the request through, client-side auth will handle it
+        return res
+      }
+    }
+    
     const redirectUrl = new URL('/login', req.url)
     redirectUrl.searchParams.set('redirectTo', req.nextUrl.pathname)
     return NextResponse.redirect(redirectUrl)

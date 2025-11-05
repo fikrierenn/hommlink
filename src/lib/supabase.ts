@@ -24,11 +24,19 @@ const createSupabaseClient = () => {
     auth: {
       autoRefreshToken: true,
       persistSession: true,
-      detectSessionInUrl: true
+      detectSessionInUrl: true,
+      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      storageKey: 'hommlink-auth-token',
+      flowType: 'pkce'
     },
     realtime: {
       params: {
         eventsPerSecond: 10
+      }
+    },
+    global: {
+      headers: {
+        'X-Client-Info': 'hommlink-crm-web'
       }
     }
   })
