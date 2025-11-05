@@ -1,24 +1,40 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Get environment variables with fallbacks for build time
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+// Create a function to get the client safely
+const createSupabaseClient = () => {
+  if (typeof window === 'undefined') {
+    // Server-side: return a mock client for build time
+    return null as any
+  }
+  
+  // Client-side: check for real environment variables
+  const realUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const realKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!realUrl || !realKey) {
+    console.error('Missing Supabase environment variables')
+    return null as any
+  }
+  
+  return createClient(realUrl, realKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    },
+    realtime: {
+      params: {
+        eventsPerSecond: 10
+      }
+    }
+  })
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 10
-    }
-  }
-})
+export const supabase = createSupabaseClient()
 
 // Database types
 export type Database = {
@@ -194,18 +210,7 @@ export type Database = {
 }
 
 // Typed Supabase client
-export const supabaseTyped = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 10
-    }
-  }
-})
+export const supabaseTyped = createSupabaseClient() as any
 
 // Export types for use in other files
 export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
