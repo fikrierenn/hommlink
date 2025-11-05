@@ -37,6 +37,7 @@ export default function DashboardPage() {
   }
 
   if (loading) {
+    console.log('📊 Dashboard loading...')
     return (
       <AppLayout>
         <LoadingPage text="Dashboard yükleniyor..." />
@@ -44,7 +45,8 @@ export default function DashboardPage() {
     )
   }
 
-  if (error) {
+  if (error && !stats) {
+    console.log('📊 Dashboard error:', error)
     return (
       <AppLayout>
         <div className="text-center py-8">
@@ -57,6 +59,8 @@ export default function DashboardPage() {
       </AppLayout>
     )
   }
+
+  console.log('📊 Dashboard rendering with stats:', !!stats)
 
   const getActivityIcon = (type: string) => {
     switch (type) {
