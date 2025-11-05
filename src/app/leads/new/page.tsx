@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic'
 import { AppLayout } from '@/components/layout'
@@ -8,8 +9,20 @@ import { LeadCreateForm } from '@/components/leads/LeadCreateForm'
 import { LeadService } from '@/services/leadService'
 import type { LeadInsert } from '@/types'
 
-export default function NewLeadPage() {
+function NewLeadForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // URL parametrelerinden initial data oluştur
+  const initialData = {
+    name: searchParams.get('name') || '',
+    phone: searchParams.get('phone') || '',
+    city: searchParams.get('location') || searchParams.get('city') || '',
+    source: (searchParams.get('source') as any) || 'whatsapp',
+    notes: searchParams.get('source') === 'whatsapp_parser' 
+      ? 'WhatsApp ayrıştırıcısından oluşturuldu'
+      : ''
+  }
 
   const handleBack = () => {
     router.push('/leads')
@@ -38,7 +51,16 @@ export default function NewLeadPage() {
       <LeadCreateForm 
         onSave={handleSave}
         onCancel={handleBack}
+        initialData={initialData}
       />
     </AppLayout>
+  )
+}
+
+export default function NewLeadPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NewLeadForm />
+    </Suspense>
   )
 }

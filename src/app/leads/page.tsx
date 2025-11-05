@@ -9,7 +9,7 @@ import { LeadFilters } from '@/components/leads/LeadFilters'
 import { SearchBar } from '@/components/leads/SearchBar'
 import { useLeads } from '@/hooks'
 import { Button } from '@/components/ui'
-import { Plus, Filter } from 'lucide-react'
+import { Plus, Filter, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 
 export default function LeadsPage() {
@@ -73,12 +73,20 @@ export default function LeadsPage() {
               <p className="text-sm text-gray-600">Toplam Aday</p>
               <p className="text-2xl font-bold text-gray-900">{pagination.total}</p>
             </div>
-            <Link href="/leads/new">
-              <Button size="sm" className="flex items-center space-x-2">
-                <Plus className="h-4 w-4" />
-                <span>Yeni Aday</span>
-              </Button>
-            </Link>
+            <div className="flex space-x-2">
+              <Link href="/leads/parser">
+                <Button size="sm" variant="outline" className="flex items-center space-x-2">
+                  <MessageSquare className="h-4 w-4" />
+                  <span>WhatsApp</span>
+                </Button>
+              </Link>
+              <Link href="/leads/new">
+                <Button size="sm" className="flex items-center space-x-2">
+                  <Plus className="h-4 w-4" />
+                  <span>Yeni Aday</span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
