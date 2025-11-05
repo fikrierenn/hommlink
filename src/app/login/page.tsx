@@ -22,8 +22,10 @@ function LoginForm() {
 
   // Redirect if already authenticated
   useEffect(() => {
+    console.log('🔐 Login page - loading:', loading, 'user:', !!user, 'redirectTo:', redirectTo)
     if (!loading && user) {
-      router.push(redirectTo)
+      console.log('✅ User already authenticated, redirecting to:', redirectTo)
+      router.replace(redirectTo)
     }
   }, [user, loading, router, redirectTo])
 
@@ -32,26 +34,12 @@ function LoginForm() {
     setError('')
     setIsLoading(true)
 
-    console.log('📱 Login attempt from:', navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop')
-    console.log('📧 Email:', email)
-    console.log('🔗 Redirect to:', redirectTo)
-
-    try {
-      const result = await signIn(email, password)
-      
-      if (!result.success) {
-        console.error('❌ Login failed:', result.error)
-        setError(result.error || 'Giriş başarısız')
-      } else {
-        console.log('✅ Login successful, redirecting to:', redirectTo)
-        // Small delay to ensure session is set
-        setTimeout(() => {
-          router.push(redirectTo)
-        }, 100)
-      }
-    } catch (error) {
-      console.error('❌ Login exception:', error)
-      setError('Beklenmeyen bir hata oluştu')
+    const result = await signIn(email, password)
+    
+    if (!result.success) {
+      setError(result.error || 'Giriş başarısız')
+    } else {
+      router.push(redirectTo)
     }
     
     setIsLoading(false)

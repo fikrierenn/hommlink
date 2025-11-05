@@ -14,19 +14,13 @@ export default function HomePage() {
     console.log('🏠 Home page - loading:', loading, 'user:', !!user)
     
     if (!loading) {
-      // Small delay for mobile devices to ensure auth state is properly loaded
-      const isMobile = typeof window !== 'undefined' && /Mobile|Android|iPhone|iPad/.test(navigator.userAgent)
-      const delay = isMobile ? 500 : 100
-      
-      setTimeout(() => {
-        if (user) {
-          console.log('✅ User authenticated, redirecting to dashboard')
-          router.push('/dashboard')
-        } else {
-          console.log('❌ No user, redirecting to login')
-          router.push('/login')
-        }
-      }, delay)
+      if (user) {
+        console.log('✅ User authenticated, redirecting to dashboard')
+        router.replace('/dashboard')
+      } else {
+        console.log('❌ No user, redirecting to login')
+        router.replace('/login')
+      }
     }
   }, [user, loading, router])
 

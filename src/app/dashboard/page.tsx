@@ -21,7 +21,9 @@ export default function DashboardPage() {
   const { stats, recentActivities, loading, error, refresh } = useDashboard()
 
   useEffect(() => {
+    console.log('📊 Dashboard - authLoading:', authLoading, 'user:', !!user)
     if (!authLoading && !user) {
+      console.log('❌ No user in dashboard, redirecting to login')
       router.push('/login')
     }
   }, [user, authLoading, router])

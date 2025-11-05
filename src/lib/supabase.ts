@@ -24,20 +24,7 @@ const createSupabaseClient = () => {
     auth: {
       autoRefreshToken: true,
       persistSession: true,
-      detectSessionInUrl: true,
-      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-      storageKey: 'hommlink-auth-token',
-      flowType: 'pkce'
-    },
-    realtime: {
-      params: {
-        eventsPerSecond: 10
-      }
-    },
-    global: {
-      headers: {
-        'X-Client-Info': 'hommlink-crm-web'
-      }
+      detectSessionInUrl: true
     }
   })
 }
@@ -217,8 +204,8 @@ export type Database = {
   }
 }
 
-// Typed Supabase client
-export const supabaseTyped = createSupabaseClient() as any
+// Use the same instance
+export const supabaseTyped = supabase
 
 // Export types for use in other files
 export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
