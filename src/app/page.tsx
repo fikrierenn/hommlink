@@ -15,9 +15,8 @@ export default function HomePage() {
     
     if (!loading) {
       if (user) {
-        console.log('✅ User authenticated, redirecting to test-dashboard')
-        // Temporarily redirect to test page
-        router.replace('/test-dashboard')
+        console.log('✅ User authenticated, redirecting to dashboard')
+        router.replace('/dashboard')
       } else {
         console.log('❌ No user, redirecting to login')
         router.replace('/login')

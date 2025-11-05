@@ -18,7 +18,42 @@ import Link from 'next/link'
 export default function DashboardPage() {
   const { user, loading: authLoading } = useAuth()
   const router = useRouter()
-  const { stats, recentActivities, loading, error, refresh } = useDashboard()
+  // Temporarily disable useDashboard to debug
+  // const { stats, recentActivities, loading, error, refresh } = useDashboard()
+  const stats = {
+    totalLeads: 127,
+    newLeadsToday: 5,
+    newLeadsThisWeek: 15,
+    newLeadsThisMonth: 43,
+    callsNeeded: 23,
+    appointmentsSet: 8,
+    conversionRate: 24,
+    totalCalls: 186,
+    callSuccessRate: 72,
+    whatsappSent: 28,
+    whatsappResponseRate: 71
+  }
+  const recentActivities = [
+    {
+      id: '1',
+      type: 'whatsapp_sent',
+      leadName: 'Ahmet Yılmaz',
+      leadId: '1',
+      description: 'WhatsApp mesajı gönderildi',
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: '2',
+      type: 'lead_created',
+      leadName: 'Fatma Demir',
+      leadId: '2',
+      description: 'Yeni aday eklendi',
+      createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
+    }
+  ]
+  const loading = false
+  const error = null
+  const refresh = () => console.log('Refresh clicked')
 
   useEffect(() => {
     console.log('📊 Dashboard - authLoading:', authLoading, 'user:', !!user)
@@ -36,31 +71,7 @@ export default function DashboardPage() {
     return null
   }
 
-  if (loading) {
-    console.log('📊 Dashboard loading...')
-    return (
-      <AppLayout>
-        <LoadingPage text="Dashboard yükleniyor..." />
-      </AppLayout>
-    )
-  }
-
-  if (error && !stats) {
-    console.log('📊 Dashboard error:', error)
-    return (
-      <AppLayout>
-        <div className="text-center py-8">
-          <p className="text-red-600 mb-4">{error}</p>
-          <Button onClick={refresh} variant="outline">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Tekrar Dene
-          </Button>
-        </div>
-      </AppLayout>
-    )
-  }
-
-  console.log('📊 Dashboard rendering with stats:', !!stats)
+  console.log('📊 Dashboard rendering with user:', !!user)
 
   const getActivityIcon = (type: string) => {
     switch (type) {
