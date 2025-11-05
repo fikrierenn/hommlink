@@ -11,13 +11,13 @@ import { use } from 'react'
 import type { Lead } from '@/types'
 
 interface LeadEditPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function LeadEditPage({ params }: LeadEditPageProps) {
-  const { id } = params
+  const { id } = use(params)
   const router = useRouter()
   const { lead, loading, error, updateLead } = useLeadDetail(id)
 
